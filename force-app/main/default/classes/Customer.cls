@@ -5,7 +5,7 @@ public class Customer {
 
     public static final String PREMIUM_TYPE = 'Premium';
     
-    private String name;
+    public String name;
 
     public String document;
 
