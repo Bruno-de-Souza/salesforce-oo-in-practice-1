@@ -8,7 +8,6 @@ public class CustomerTest {
     public static void shouldCreateCustomer () {
 
         Customer customer = new Customer();
-        customer.name = '1';
 
     }
 
