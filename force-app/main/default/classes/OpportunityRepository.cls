@@ -18,4 +18,4 @@ public virtual class OpportunityRepository {
         return opportunity;
     }
 
-}
+}   
