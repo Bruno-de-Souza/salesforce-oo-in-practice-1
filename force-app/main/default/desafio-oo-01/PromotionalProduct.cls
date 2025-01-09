@@ -32,9 +32,10 @@ public class PromotionalProduct {
         
     }
 
-    public PromotionalProduct ( PromotionalProduct__c promotionalProduct ) {
+    public PromotionalProduct (PromotionalProduct__c promotionalProduct) {
 
-        this (promotionalProduct.Product__r
-            , promotionalProduct.Discount__c
-            , promotionalProduct.Id );
+        this(promotionalProduct.Product__r, promotionalProduct.Discount__c, promotionalProduct.Id);
+
     }
+
+}
