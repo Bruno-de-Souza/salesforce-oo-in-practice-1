@@ -38,5 +38,3 @@ public class PromotionalProduct {
             , promotionalProduct.Discount__c
             , promotionalProduct.Id );
     }
-
-}
