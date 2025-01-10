@@ -3,13 +3,19 @@
  */
 public class DynamicForm {
 
-    String title;
+    public String title;
 
-    String description;
+    public String description;
+
+    public Date startDate;
+
+    public Date dueDate;
 
     List<QuestionForm> questions;
     
     public DynamicForm() {
+
+        this.questions = new List<QuestionForm>();
 
     }
 

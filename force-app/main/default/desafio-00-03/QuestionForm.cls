@@ -3,20 +3,24 @@
  */
 public class QuestionForm {
 
-    String paragraph;
+    public String title;
 
-    String shortAnswer;
+    public String description;
 
-    Boolean checkBox;
+    public String code;
 
-    List<Boolean> multipleChoices;
+    public QuestionFormType type;
 
-    List<Integer> linearScale;
+    List<QuestionFormOptions> options;
+
+    List<Integer> Scales;
 
     Boolean required;
     
     public QuestionForm() {
 
     }
+
+    
 
 }
