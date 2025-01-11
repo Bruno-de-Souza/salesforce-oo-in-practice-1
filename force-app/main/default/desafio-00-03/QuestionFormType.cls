@@ -4,7 +4,7 @@
 public Enum QuestionFormType {
     
     SHORT_TEXT,
-    PATAGRAPH,
+    PARAGRAPH,
     LINEAR_SCALE,
     MULTIPLE_CHOICE,
     MULTIPLE_CHOICE_GRID,

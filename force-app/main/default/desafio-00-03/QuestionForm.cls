@@ -13,14 +13,14 @@ public class QuestionForm {
 
     List<QuestionFormOptions> options;
 
-    List<Integer> Scales;
-
-    Boolean required;
+    List<QuestionFormScales> scales;
     
-    public QuestionForm() {
+    public QuestionForm(QuestionFormType type) {
+
+        this.type = type;
+        this.options = options;
+        this.scales = scales;
 
     }
-
-    
 
 }

@@ -11,7 +11,7 @@ public class DynamicForm {
 
     public Date dueDate;
 
-    List<QuestionForm> questions;
+    public  List<QuestionForm> questions;
     
     public DynamicForm() {
 
