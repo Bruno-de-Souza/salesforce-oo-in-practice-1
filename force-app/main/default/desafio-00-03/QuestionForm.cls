@@ -3,19 +3,23 @@
  */
 public class QuestionForm {
 
-    String paragraph;
+    public String title;
 
-    String shortAnswer;
+    public String description;
 
-    Boolean checkBox;
+    public String code;
 
-    List<Boolean> multipleChoices;
+    public QuestionFormType type;
 
-    List<Integer> linearScale;
+    List<QuestionFormOptions> options;
 
-    Boolean required;
+    List<QuestionFormScales> scales;
     
-    public QuestionForm() {
+    public QuestionForm(QuestionFormType type) {
+
+        this.type = type;
+        this.options = options;
+        this.scales = scales;
 
     }
 
