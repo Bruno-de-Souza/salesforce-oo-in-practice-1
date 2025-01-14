@@ -11,15 +11,15 @@ public class QuestionForm {
 
     public QuestionFormType type;
 
-    List<QuestionFormOptions> options;
+    public List<QuestionFormOptions> options;
 
-    List<QuestionFormScales> scales;
+    public List<QuestionFormScales> scales;
     
     public QuestionForm(QuestionFormType type) {
 
         this.type = type;
-        this.options = options;
-        this.scales = scales;
+        this.options = new List<QuestionFormOptions>();
+        this.scales = new List<QuestionFormScales>();
 
     }
 
