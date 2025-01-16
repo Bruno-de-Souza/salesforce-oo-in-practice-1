@@ -1,13 +1,11 @@
 /**
  * @author bruno.moreira
  */
-public class QuestionForm {
+public virtual class QuestionForm {
 
     public String title;
 
     public String description;
-
-    public String code;
 
     public QuestionFormType type;
 
