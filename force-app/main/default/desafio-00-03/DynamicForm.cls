@@ -19,4 +19,39 @@ public class DynamicForm {
 
     }
 
+    public DynamicForm withTitle(String title) {
+
+        this.title = title;
+        return this;
+
+    }
+
+    public DynamicForm withDescription(String description) {
+
+        this.description = description;
+        return this;
+
+    }
+
+    public DynamicForm withstartDate(Date startDate) {
+
+        this.startDate = startDate;
+        return this;
+
+    }
+
+    public DynamicForm withDueDate(Date dueDate) {
+
+        this.dueDate = dueDate;
+        return this;
+
+    }
+
+    public DynamicForm addQuestion(QuestionForm question) {
+
+        questions.add(question);
+        return this;
+
+    }
+
 }

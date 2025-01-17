@@ -11,4 +11,11 @@ public class QuestionFormCode extends QuestionForm{
 
     }
 
+    public QuestionFormCode withCode(String code) {
+
+        this.code = code;
+        return this;
+
+    }
+
 }
