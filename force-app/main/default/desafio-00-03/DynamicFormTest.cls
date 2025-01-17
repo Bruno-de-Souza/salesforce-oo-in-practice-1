@@ -7,44 +7,49 @@ public class DynamicFormTest {
     @isTest
     public static void shoudlCreateDynamicForm() {
 
-        DynamicForm forms = new DynamicForm();
-        
-        forms.title = 'Form 01';
-        forms.description = 'Form Description 01';
-        forms.startDate = Date.today();
-        forms.dueDate = Date.today().addDays(7);
+        DynamicForm forms = new DynamicForm()
+                                          .withTitle('Form 01')
+                                          .withDescription('Form Description 01')
+                                          .withstartDate(Date.today())
+                                          .withDueDate(Date.today().addDays(7));
 
-        QuestionForm shortText = new QuestionFormShortText();
-        
-        shortText.title = 'Short Text test 01';
+        QuestionForm shortText = new QuestionFormShortText()
+                                                        .withTitle('Short Text test 01')
+                                                        .withDescription('Short Text Description');
         
         forms.questions.add(shortText);
         
         Assert.areEqual(QuestionFormType.SHORT_TEXT, shortText.type);
 
-        QuestionFormParagraph paragraph = new QuestionFormParagraph();
-        
-        paragraph.title = 'Paragraph Test 01';
+        QuestionForm paragraph = new QuestionFormParagraph()
+                                                        .withTitle('Paragraph Test 01')
+                                                        .withDescription('Paragraph Description');
         
         forms.questions.add(paragraph);
         
         Assert.areEqual(QuestionFormType.PARAGRAPH , paragraph.type);
 
-        QuestionFormCode codeText = new QuestionFormCode();
-        
-        codeText.title = 'Code Text Test 01';
-        codeText.code = 'public class Hello Bruno {\n \t default String message \n}';
+        QuestionFormCode codeText = (QuestionFormCode) new QuestionFormCode()
+                                                                         .withCode('public class Hello Bruno {\n \t default String message \n}')
+                                                                         .withTitle('Code Text Test 01')
+                                                                         .withDescription('Code Text Description');
 
+        forms.addQuestion(new QuestionFormCode()
+                                            .withCode('public class Hello Bruno {\n \t default String message \n}')
+                                            .withDescription('Code Text Description')
+                                            .withTitle('Code Text Test 01'));                                                 
+    
         Assert.areEqual(QuestionFormType.CODE_TEXT, codeText.type);
         Assert.isNotNull(codeText.code);
 
         forms.questions.add(codeText);
         
-        Assert.areEqual(3, forms.questions.size());
+        Assert.areEqual(4, forms.questions.size());
 
-        QuestionFormLinearScale linearScore = new QuestionFormLinearScale();
-        
-        linearScore.title = 'Linear Scale Test 01'; 
+        QuestionFormLinearScale linearScore = (QuestionFormLinearScale) new QuestionFormLinearScale()
+                                                                                                 .withTitle('Linear Scale Test 01')
+                                                                                                 .withDescription('Linear Scale Description');
+
         linearScore.scales.add(new QuestionFormScales(0, 'Insatisfeito'));
         linearScore.scales.add(new QuestionFormScales(1, 'Um cadin insatisfeito'));
         linearScore.scales.add(new QuestionFormScales(2, 'Satisfeito'));
@@ -57,9 +62,10 @@ public class DynamicFormTest {
         
         Assert.areEqual(5, linearScore.scales.size());
 
-        QuestionFormMultipleChoice multipleChoice = new QuestionFormMultipleChoice();
+        QuestionFormMultipleChoice multipleChoice = (QuestionFormMultipleChoice) new QuestionFormMultipleChoice()
+                                                                                                             .withTitle('Multiple Choice Test 01')
+                                                                                                             .withDescription('Multiple Choice Description');
         
-        multipleChoice.title = 'Multiple Choice Test 01';
         multipleChoice.options.add(new QuestionFormOptions('Desconheço'));
         multipleChoice.options.add(new QuestionFormOptions('Conheço'));
         multipleChoice.options.add(new QuestionFormOptions('Pratico'));
@@ -71,9 +77,9 @@ public class DynamicFormTest {
         
         Assert.areEqual(4, multipleChoice.options.size());
 
-        QuestionFormMultipleChoiceGrid multipleChoiceGrid = new QuestionFormMultipleChoiceGrid();
-        
-        multipleChoiceGrid.title = 'Multiple Choice Grid Test 01';
+        QuestionFormMultipleChoiceGrid multipleChoiceGrid = (QuestionFormMultipleChoiceGrid) new QuestionFormMultipleChoiceGrid()
+                                                                                                                             .withTitle('Multiple Choice Grid Test 01')
+                                                                                                                             .withDescription('Multiple Choice Grid Description');
 
         multipleChoiceGrid.rows.add(new QuestionFormOptions('Classe abstrata'));
         multipleChoiceGrid.rows.add(new QuestionFormOptions('Sobrecarga'));
@@ -94,7 +100,7 @@ public class DynamicFormTest {
 
         Assert.areEqual(5, multipleChoiceGrid.rows.size());
         
-        Assert.areEqual(6, forms.questions.size());
+        Assert.areEqual(7, forms.questions.size());
 
         System.debug( forms );
 

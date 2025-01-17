@@ -15,4 +15,18 @@ public abstract class QuestionForm {
         
     }
 
+    public QuestionForm withTitle(String title) {
+
+        this.title = title;
+        return this;
+
+    }
+
+    public QuestionForm withDescription(String description) {
+
+        this.description = description;
+        return this;
+
+    }
+
 }
