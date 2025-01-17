@@ -13,12 +13,12 @@ public class AccountBacklogItemsService {
 
         List<AggregateResult> backlogItems = this.repository.summarizeBacklogItems(accountIds);
 
-        List<Account> accounts = new List<Account>();
+        List<Account> accounts = new List<Account>();        
 
         for (AggregateResult item : backlogItems ) {
 
             AggregateResultInfo result = new AggregateResultInfo(item);
-
+          
             Account account = new Account (
                 Id = result.getString('AccountId')
                 , BacklogItems__c = result.getDecimal('TotalBacklog')
