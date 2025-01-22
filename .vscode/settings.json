@@ -10,5 +10,7 @@
     "javascript": true,
     "css": true,
     "html": true
-  }
+  },
+  "salesforcedx-vscode-core.retrieve-test-code-coverage": true,
+  "salesforcedx-vscode-core.push-or-deploy-on-save.showOutputPanel": false
 }
