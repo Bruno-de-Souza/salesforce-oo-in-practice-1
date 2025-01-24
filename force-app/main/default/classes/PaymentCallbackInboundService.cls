@@ -53,11 +53,21 @@ public class PaymentCallbackInboundService {
 
         if(accounts.isEmpty() && !leads.isEmpty()) {
 
+            Database.LeadConvert leadConvert = new Database.LeadConvert();
+
+            leadConvert.setLeadId(leads.get(0).Id);
+            leadConvert.setConvertedStatus('Closed Converted');
+            leadConvert.setDoNotCreateOpportunity(true);
+
+            Database.LeadConvertResult convertResult = Database.convertLead(leadConvert);
+
+            account = new Account(Id = convertResult.getAccountId());
 
         }
 
         if (!accounts.isEmpty()) {
             
+            account = accounts.get(0);
 
         }
 
