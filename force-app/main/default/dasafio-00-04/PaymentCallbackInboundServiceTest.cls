@@ -48,16 +48,68 @@ public class PaymentCallbackInboundServiceTest {
         return [SELECT Id, AccountId FROM Opportunity];
     }
 
+    public static List<Lead> findAvailableLeads () {
+        return [SELECT Id, Status FROM Lead];
+    }
+
     @isTest
     public static void shouldCreateOpportunityWithExistingAccount () {
         
+        PaymentCallbackInbound callbackInbound = PaymentCallbackInboundFixtureFactory.newPaymentCallbackInbound();
+
+        Account account = AccountFixtureFactory.createAccount('Bruno', callbackInbound.payer.document);
+
+        Test.setFixedSearchResults(new List<String> {account.Id});
+
+        Test.startTest();
+
+        PaymentCallbackInboundService service = new PaymentCallbackInboundService();
+
+        PaymentCallbackResponse response = service.processPayment(callbackInbound);
+
+        Test.stopTest();
+
+        Assert.isNotNull( response.operationId ); 
+
+        List<Opportunity> storedOpportunities = findAvailableOpportunities(); 
+
+        Assert.areEqual( 1 , storedOpportunities.size() ); 
 
     }
 
 
     @isTest
     public static void shouldCreateOpportunityAndConvertLeadToAccount () {
+
+        PaymentCallbackInbound callbackInbound = PaymentCallbackInboundFixtureFactory.newPaymentCallbackInbound(); 
+
+        Lead lead = LeadFixtureFactory.createLead('Bruno', callbackInbound.payer.document ); 
+
+        Test.setFixedSearchResults( new List<String> {lead.id} ); 
+
+        Assert.areEqual( 0 , findAvailableAccounts ().size() ); 
         
+        Test.startTest(); 
+        
+        PaymentCallbackInboundService service = new PaymentCallbackInboundService(); 
+        
+        PaymentCallbackResponse response = service.processPayment(callbackInbound); 
+        
+        Test.stopTest(); 
+
+        Assert.isNotNull( response.operationId ); 
+
+        List<Account> storedAccounts = findAvailableAccounts(); 
+
+        Assert.areEqual( 1 ,  storedAccounts.size() ); 
+
+        List<Lead> storedLeads = findAvailableLeads(); 
+
+        Assert.areEqual( 'Closed - Converted' ,  storedLeads.get(0).Status ); 
+
+        List<Opportunity> storedOpportunities = findAvailableOpportunities(); 
+
+        Assert.areEqual( 1 , storedOpportunities.size() ); 
 
     }
 
