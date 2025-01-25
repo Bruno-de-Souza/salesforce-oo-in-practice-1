@@ -56,7 +56,7 @@ public class PaymentCallbackInboundService {
             Database.LeadConvert leadConvert = new Database.LeadConvert();
 
             leadConvert.setLeadId(leads.get(0).Id);
-            leadConvert.setConvertedStatus('Closed Converted');
+            leadConvert.setConvertedStatus('Closed - Converted');
             leadConvert.setDoNotCreateOpportunity(true);
 
             Database.LeadConvertResult convertResult = Database.convertLead(leadConvert);
