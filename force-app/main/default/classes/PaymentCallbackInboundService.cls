@@ -10,6 +10,12 @@ public class PaymentCallbackInboundService {
     OpportunityRepository opportunityRepository;
 
     PricebookRepository pricebookRepository;
+
+    AccountPaymentCallbackBuilder accountPaymentCallbackBuilder;
+
+    LeadConverterService leadConverterService;
+
+    OpportunityPaymentCallbackBuilder opportunityPaymentCalbackBuilder;
   
     public PaymentCallbackInboundService() {
 
@@ -17,6 +23,9 @@ public class PaymentCallbackInboundService {
         this.accountRepository = new AccountRepository();
         this.opportunityRepository = new opportunityRepository();
         this.pricebookRepository = new PricebookRepository();
+        this.accountPaymentCallbackBuilder = new AccountPaymentCallbackBuilder();
+        this.leadConverterService = new leadConverterService();
+        this.opportunityPaymentCalbackBuilder = new OpportunityPaymentCallbackBuilder();
 
     }
 
@@ -34,18 +43,7 @@ public class PaymentCallbackInboundService {
 
         if(accounts.isEmpty() && leads.isEmpty()) {
 
-            account = new Account(
-    
-                DocumentNumber__c = payer.document,    
-                Name = payer.name,
-                AccountSource = 'Campanha DevBuilder',
-                BillingStreet = payer?.billing?.street,
-                BillingCity = payer?.billing?.city,
-                BillingState = payer?.billing?.state,
-                BillingPostalCode = payer?.billing?.zipCode,
-                BillingCountry = payer?.billing?.country
-
-            );
+            account = accountPaymentCallbackBuilder.toAccount(payment);
 
             accountRepository.save(account);
 
@@ -53,15 +51,9 @@ public class PaymentCallbackInboundService {
 
         if(accounts.isEmpty() && !leads.isEmpty()) {
 
-            Database.LeadConvert leadConvert = new Database.LeadConvert();
+            Database.LeadConvertResult convertResult = this.leadConverterService.convertWithoutOpportunity( leads.get(0) );
 
-            leadConvert.setLeadId(leads.get(0).Id);
-            leadConvert.setConvertedStatus('Closed - Converted');
-            leadConvert.setDoNotCreateOpportunity(true);
-
-            Database.LeadConvertResult convertResult = Database.convertLead(leadConvert);
-
-            account = new Account(Id = convertResult.getAccountId());
+            account = new Account( Id = convertResult.getAccountId());
 
         }
 
@@ -73,16 +65,7 @@ public class PaymentCallbackInboundService {
 
         Pricebook2 pricebook = this.pricebookRepository.findByname('Campanha DevBuilder');
 
-        Opportunity opportunity = new Opportunity (
-
-            AccountId = account.Id,
-            Name = payment?.payer?.name,
-            Pricebook2Id = pricebook.Id,
-            CloseDate = Date.today(),
-            StageName = 'Closed Won',
-            LeadSource = 'Campanha DevBuilder'
-
-        );
+        Opportunity opportunity = opportunityPaymentCalbackBuilder.toOpportunity(payment, pricebook, account);
 
         opportunityRepository.save(opportunity);
         
