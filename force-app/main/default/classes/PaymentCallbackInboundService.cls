@@ -4,10 +4,13 @@
 public class PaymentCallbackInboundService {
 
     PaymentSearcherPayer seacher;
+
+    CreateOpportutityCallbackFactory factory;
   
     public PaymentCallbackInboundService() {
 
         this.seacher = new PaymentSearcherPayer();
+        this.factory = new CreateOpportutityCallbackFactory();
 
     }
 
@@ -15,35 +18,7 @@ public class PaymentCallbackInboundService {
 
         List<List<SObject>> payers = seacher.search(payment?.payer?.document);
 
-        List<Account> accounts = payers.get(0);
-
-        List<Lead> leads = payers.get(1);
-
-        Account account;
-
-        PaymentCallbackInbound.Payer payer = payment?.payer;
-
-        BaseCreateOpportunityCallback callbackService;
-
-        if(accounts.isEmpty() && leads.isEmpty()) {
-
-            callbackService = new CreateAccountOpportunityCallback();
-
-        }
-
-        if(accounts.isEmpty() && !leads.isEmpty()) {
-
-            callbackService = new ConvertLeadOpportunityCallback();
-            callbackService.setPayer( leads.get(0) );
-
-        }
-
-        if (!accounts.isEmpty()) {
-            
-            callbackService = new HasAccountOpportunityCallback();
-            callbackService.setPayer( accounts.get(0) );
-
-        }
+        BaseCreateOpportunityCallback callbackService = this.factory.getStrategy(payers);
 
         Opportunity opportunity = callbackService.createOpportunity(payment);
         
